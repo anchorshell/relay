@@ -1,0 +1,27 @@
+/* Explicit shared control classes, not a reset for every button/role/card.
+   Platform imports this file too because it owns a separate theme stylesheet. */
+:is(
+  .app-select,
+  .app-checkbox,
+  .app-sidebar-link,
+  .app-mobile-menu-button,
+  .app-sidebar-close,
+  .app-sidebar-backdrop,
+  .site-theme-toggle,
+  .ui-action-menu-button
+):not(:disabled):not([aria-disabled='true']):not([data-disabled]) {
+  @apply cursor-pointer;
+}
+
+:is(
+  .app-select,
+  .app-checkbox,
+  .app-sidebar-link,
+  .app-mobile-menu-button,
+  .app-sidebar-close,
+  .app-sidebar-backdrop,
+  .site-theme-toggle,
+  .ui-action-menu-button
+):is(:disabled, [aria-disabled='true'], [data-disabled]) {
+  @apply cursor-not-allowed;
+}

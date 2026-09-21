@@ -1,0 +1,748 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AnchorShell Relay Inference API",
+    "version": "1.0.0",
+    "description": "Public inference contract; this is not a software release version. Self-hosted Relay requires RELAY_API_TOKEN as a Bearer credential by default. An explicitly empty RELAY_API_TOKEN disables inference authentication; use that only in controlled environments. Use TLS for remote access. Management, dummy fixtures, and private service endpoints are outside this specification."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:11730/v1",
+      "description": "Default self-hosted development origin; replace with your protected Relay origin."
+    }
+  ],
+  "security": [
+    {
+      "relayApiToken": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Inference",
+      "description": "Provider-compatible inference requests."
+    },
+    {
+      "name": "Models",
+      "description": "Configured model discovery."
+    }
+  ],
+  "paths": {
+    "/chat/completions": {
+      "post": {
+        "operationId": "createChatCompletion",
+        "summary": "Create a chat completion",
+        "tags": [
+          "Inference"
+        ],
+        "description": "Uses enabled candidates, scheduling and limits. Effective HTTP guardrails support non-streaming chat/responses only; guarded streaming or embeddings requests are rejected. Additional fields follow the configured provider, not a universal provider schema.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              },
+              "example": {
+                "model": "production",
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "Return a short status sentence."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Selected provider response.",
+            "headers": {
+              "X-Relay-Selected-Endpoint": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Endpoint-Id": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Provider-Id": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Upstream-Model": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Wait-Ms": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Fallback-Count": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Input-Tokens": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Output-Tokens": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Cost-Micros": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Input-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Output-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Total-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Cost-Micros": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "OpenAI-compatible JSON from the selected upstream. Fields and usage availability vary by provider."
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Provider SSE frames. Committed streams cannot be transparently restarted or replaced."
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, route selection, or incompatible guardrail request."
+          },
+          "401": {
+            "$ref": "#/components/responses/InferenceUnauthorized"
+          },
+          "413": {
+            "description": "Request body exceeds the configured size limit."
+          },
+          "429": {
+            "description": "No candidate fits the wait budget, or an unhandled provider throttle.",
+            "headers": {
+              "Retry-After": {
+                "description": "Wait duration in seconds when returned by Relay.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "error": {
+                    "type": "rate_limit_wait_budget_exceeded",
+                    "message": "all candidates exceed wait budget",
+                    "retry_after": 12
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Selected upstream could not be prepared or failed after bounded handling."
+          },
+          "503": {
+            "description": "Required policy configuration/service unavailable or a fail-closed guardrail result."
+          },
+          "default": {
+            "description": "Provider status and body may pass through. Relay and upstream errors do not share one universal JSON schema.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/responses": {
+      "post": {
+        "operationId": "createResponse",
+        "summary": "Create a response",
+        "tags": [
+          "Inference"
+        ],
+        "description": "Uses enabled candidates, scheduling and limits. Effective HTTP guardrails support non-streaming chat/responses only; guarded streaming or embeddings requests are rejected. Additional fields follow the configured provider, not a universal provider schema.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponsesRequest"
+              },
+              "example": {
+                "model": "production",
+                "input": "Return a short status sentence."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Selected provider response.",
+            "headers": {
+              "X-Relay-Selected-Endpoint": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Endpoint-Id": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Provider-Id": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Upstream-Model": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Wait-Ms": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Fallback-Count": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Input-Tokens": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Output-Tokens": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Cost-Micros": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Input-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Output-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Total-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Cost-Micros": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "OpenAI-compatible JSON from the selected upstream. Fields and usage availability vary by provider."
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Provider SSE frames. Committed streams cannot be transparently restarted or replaced."
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, route selection, or incompatible guardrail request."
+          },
+          "401": {
+            "$ref": "#/components/responses/InferenceUnauthorized"
+          },
+          "413": {
+            "description": "Request body exceeds the configured size limit."
+          },
+          "429": {
+            "description": "No candidate fits the wait budget, or an unhandled provider throttle.",
+            "headers": {
+              "Retry-After": {
+                "description": "Wait duration in seconds when returned by Relay.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "error": {
+                    "type": "rate_limit_wait_budget_exceeded",
+                    "message": "all candidates exceed wait budget",
+                    "retry_after": 12
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Selected upstream could not be prepared or failed after bounded handling."
+          },
+          "503": {
+            "description": "Required policy configuration/service unavailable or a fail-closed guardrail result."
+          },
+          "default": {
+            "description": "Provider status and body may pass through. Relay and upstream errors do not share one universal JSON schema.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/embeddings": {
+      "post": {
+        "operationId": "createEmbedding",
+        "summary": "Create embeddings",
+        "tags": [
+          "Inference"
+        ],
+        "description": "Uses enabled candidates, scheduling and limits. Effective HTTP guardrails support non-streaming chat/responses only; guarded streaming or embeddings requests are rejected. Additional fields follow the configured provider, not a universal provider schema.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmbeddingsRequest"
+              },
+              "example": {
+                "model": "embedding-model",
+                "input": "A sample document."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Selected provider response.",
+            "headers": {
+              "X-Relay-Selected-Endpoint": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Endpoint-Id": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Provider-Id": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Selected-Upstream-Model": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Relay-Wait-Ms": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Fallback-Count": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Input-Tokens": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Output-Tokens": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Estimated-Cost-Micros": {
+                "description": "Selected path or admission metadata when available.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Input-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Output-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Total-Tokens": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Relay-Actual-Cost-Micros": {
+                "description": "Terminal non-streaming metering when available; inspect logs for streaming usage.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "OpenAI-compatible JSON from the selected upstream. Fields and usage availability vary by provider."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, route selection, or incompatible guardrail request."
+          },
+          "401": {
+            "$ref": "#/components/responses/InferenceUnauthorized"
+          },
+          "413": {
+            "description": "Request body exceeds the configured size limit."
+          },
+          "429": {
+            "description": "No candidate fits the wait budget, or an unhandled provider throttle.",
+            "headers": {
+              "Retry-After": {
+                "description": "Wait duration in seconds when returned by Relay.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "error": {
+                    "type": "rate_limit_wait_budget_exceeded",
+                    "message": "all candidates exceed wait budget",
+                    "retry_after": 12
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Selected upstream could not be prepared or failed after bounded handling."
+          },
+          "503": {
+            "description": "Required policy configuration/service unavailable or a fail-closed guardrail result."
+          },
+          "default": {
+            "description": "Provider status and body may pass through. Relay and upstream errors do not share one universal JSON schema.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models": {
+      "get": {
+        "operationId": "listModels",
+        "summary": "List enabled model endpoints",
+        "tags": [
+          "Models"
+        ],
+        "description": "Returns upstream model identifiers for enabled configured endpoints. It is not a complete list of group call names or a global provider catalog.",
+        "responses": {
+          "200": {
+            "description": "Enabled model endpoints visible to the deployment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelList"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/InferenceUnauthorized"
+          },
+          "default": {
+            "description": "Deployment or data access failure."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "InferenceUnauthorized": {
+        "description": "Missing, malformed, or incorrect RELAY_API_TOKEN. Management tokens and session cookies are not inference credentials.",
+        "headers": {
+          "WWW-Authenticate": {
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer realm=\"Relay inference API\""
+          },
+          "Cache-Control": {
+            "schema": {
+              "type": "string"
+            },
+            "example": "no-store"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            },
+            "example": {
+              "error": "valid Relay API token required"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "relayApiToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Use RELAY_API_TOKEN, not RELAY_ADMIN_TOKEN or a provider credential. Generated once on startup when absent; explicitly empty disables inference authentication."
+      }
+    },
+    "schemas": {
+      "ChatRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Routing selector: configured group name/slug, model name, or provider/model. No separate route or endpoint selector is required."
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string"
+                },
+                "content": {
+                  "description": "Provider-supported text, multimodal parts, or null.",
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {}
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "additionalProperties": true,
+        "description": "Provider-compatible request. Relay derives wait, fallback, priority, token estimates, and cost limits from internal/configured policy, not per-request override fields or headers. Standard output-token limits inform internal estimation. Additional provider fields are forwarded, not interpreted as Relay policy controls."
+      },
+      "ResponsesRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Routing selector: configured group name/slug, model name, or provider/model. No separate route or endpoint selector is required."
+          },
+          "input": {
+            "description": "Provider-supported text or input items.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {}
+              }
+            ]
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "additionalProperties": true,
+        "description": "Provider-compatible request. Relay derives wait, fallback, priority, token estimates, and cost limits from internal/configured policy, not per-request override fields or headers. Standard output-token limits inform internal estimation. Additional provider fields are forwarded, not interpreted as Relay policy controls."
+      },
+      "EmbeddingsRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Routing selector: configured group name/slug, model name, or provider/model. No separate route or endpoint selector is required."
+          },
+          "input": {
+            "description": "Text, text arrays, or provider-supported token arrays.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {}
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "description": "Provider-compatible request. Relay derives wait, fallback, priority, token estimates, and cost limits from internal/configured policy, not per-request override fields or headers. Standard output-token limits inform internal estimation. Additional provider fields are forwarded, not interpreted as Relay policy controls."
+      },
+      "ModelList": {
+        "type": "object",
+        "required": [
+          "object",
+          "data"
+        ],
+        "properties": {
+          "object": {
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "object",
+                "owned_by"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "object": {
+                  "const": "model"
+                },
+                "owned_by": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

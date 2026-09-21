@@ -1,0 +1,37 @@
+# OS / editor noise
+.DS_Store
+
+# Local environment
+.env
+.env.local
+
+# Go build output
+# Keep the pre-rename executable ignored too.
+/relay
+bin/
+coverage.out
+tmp/
+
+# Runtime databases; historical files remain local until manually removed.
+/relay.db
+/relay.db-wal
+/relay.db-shm
+
+# Embedded UI build output
+internal/ui/dist/*
+!internal/ui/dist/.gitkeep
+
+# Nuxt / Node generated files
+web/node_modules/
+web/.nuxt/
+web/.output/
+web/.output/public/_nuxt/
+web/.nitro/
+web/.cache/
+web/dist/
+
+# Logs
+*.log
+
+tmp-files
+tmp-files/*

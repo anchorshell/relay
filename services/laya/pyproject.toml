@@ -1,0 +1,35 @@
+[project]
+name = "anchorshell-laya-worker"
+version = "0.1.0"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "laya @ git+https://github.com/NandhaKishorM/laya@6a5819129eb220570792e417e49723d697efd76f",
+  "torch==2.14.0",
+  "transformers==5.17.0",
+  "uvicorn==0.53.0",
+]
+
+[tool.uv]
+package = false
+conflicts = [[{ extra = "cpu" }, { extra = "cuda" }]]
+
+# Opt-in deployment profile; default Mac/Linux accelerator behavior is unchanged.
+[project.optional-dependencies]
+cpu = ["torch==2.14.0"]
+cuda = ["torch==2.14.0 ; sys_platform == 'linux'"]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
+  { index = "pypi", extra = "cuda", marker = "sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true

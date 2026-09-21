@@ -1,0 +1,9 @@
+{
+  "repository": "convaiinnovations/laya-multilingual",
+  "revision": "052592a15d198d9ad47da779604259b10b47b7aa",
+  "runtime_repository": "https://github.com/NandhaKishorM/laya",
+  "runtime_revision": "6a5819129eb220570792e417e49723d697efd76f",
+  "license": "Apache-2.0",
+  "max_len": 1024,
+  "head_max_len": 256
+}

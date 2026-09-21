@@ -1,0 +1,297 @@
+AnchorShell Relay Community License 1.0
+
+Copyright (c) 2026 AnchorShell Inc.
+All rights reserved except as expressly granted below.
+
+THIS IS A SOURCE-AVAILABLE LICENSE. IT IS NOT AN OSI-APPROVED OPEN-SOURCE LICENSE.
+
+1. Definitions
+
+1.1 "AnchorShell" or "Licensor" means AnchorShell Inc.
+
+1.2 "Software" means the AnchorShell Relay Community Edition source code,
+object code, documentation, and other materials distributed with this license,
+including modifications and derivative works based on them.
+
+1.3 "You" or "Licensee" means the individual or legal entity exercising rights
+under this license.
+
+1.4 "Affiliate" means any entity that directly or indirectly controls, is
+controlled by, or is under common control with You. "Control" means ownership
+of more than fifty percent (50%) of the voting interests of an entity, or the
+power to direct its management.
+
+1.5 "Aggregate Gross Revenue" means the total gross revenue of You and all of
+Your Affiliates during the immediately preceding twelve (12) months, before
+expenses, excluding taxes collected for a government and excluding
+intercompany transfers counted elsewhere in the same consolidated group.
+
+1.6 "Small Business" means a Licensee whose Aggregate Gross Revenue is less
+than US$1,000,000 (or the equivalent amount in another currency).
+
+1.7 "Personal or Noncommercial Use" means use by an individual for personal,
+educational, evaluation, research, hobby, or other noncommercial purposes that
+is not performed for or on behalf of a business or other revenue-generating
+organization.
+
+1.8 "Commercial Use" means any use, copying, modification, distribution,
+hosting, deployment, or integration of the Software by or for a business,
+organization, or other activity connected with commercial operations,
+revenue-generating activity, or internal business operations.
+
+1.9 "Reserved Commercial Features" means the functionality listed in Schedule A,
+including substantially equivalent functionality regardless of its name, user
+interface, protocol, or implementation.
+
+1.10 "Managed Relay Service" means a product or service whose primary purpose is
+to provide third parties with hosted, managed, or remote access to the Software,
+or to substantially equivalent Relay gateway functionality derived from the
+Software. A separate product that merely uses Relay internally as one component
+of a materially different product or service is not a Managed Relay Service.
+
+1.11 "Competing Relay Product" means a modified or derivative version of the
+Software whose primary purpose is to provide a practical substitute for a paid
+AnchorShell Relay product or service.
+
+2. License Grant
+
+Subject to the terms of this license, AnchorShell grants You a worldwide,
+non-exclusive, non-transferable except as permitted by Section 4, royalty-free
+license to use, copy, run, inspect, and modify the Software:
+
+(a) for unlimited Personal or Noncommercial Use; and
+
+(b) for Commercial Use if You are a Small Business.
+
+These rights apply only while You comply with this license.
+
+3. Commercial Use Above the Revenue Threshold
+
+If You are not a Small Business, You may not make Commercial Use of the
+Software unless You obtain a separate commercial license from AnchorShell.
+
+Crossing the US$1,000,000 Aggregate Gross Revenue threshold does not require
+You to stop using the Software immediately for purely Personal or Noncommercial
+Use, but Commercial Use requires a separate commercial license.
+
+4. Redistribution
+
+You may redistribute the Software, with or without permitted modifications,
+in source or object form, only if:
+
+(a) the redistribution complies with all terms of this license;
+
+(b) You include this license and all copyright notices with the redistributed
+Software;
+
+(c) You clearly identify material modifications You made; and
+
+(d) You do not represent Your modified version as an official AnchorShell
+product.
+
+You may not sublicense the Software under terms that grant broader rights than
+this license.
+
+5. Reserved Commercial Features
+
+Unless You have a separate commercial license from AnchorShell, You may not:
+
+(a) modify, extend, combine, configure, or use the Software to implement or
+enable any Reserved Commercial Feature;
+
+(b) distribute or publish a modified or derivative version of the Software
+that implements or enables any Reserved Commercial Feature;
+
+(c) use a modified or derivative version of the Software containing a Reserved
+Commercial Feature, including for internal business use; or
+
+(d) use the Software as a substantial component of another work for the purpose
+of reproducing or replacing a Reserved Commercial Feature.
+
+This Section applies regardless of whether You are a Small Business.
+
+This Section does not restrict software that is independently developed without
+copying, modifying, deriving from, or combining with the Software, except to
+the extent other intellectual-property rights may apply.
+
+6. Competing Products and Managed Services
+
+Unless You have a separate commercial license from AnchorShell, You may not:
+
+(a) offer, sell, license, distribute, or operate a Competing Relay Product; or
+
+(b) offer or operate a Managed Relay Service for third parties.
+
+For clarity, this Section does not prohibit a permitted Licensee from using
+Relay internally as infrastructure for a materially different application,
+website, service, or business, provided the third party is not being offered
+Relay itself or a practical substitute for AnchorShell Relay as the primary
+product.
+
+7. No Circumvention of Commercial Boundaries
+
+You may not bypass, disable, defeat, or circumvent a technical or licensing
+mechanism whose purpose is to limit access to Reserved Commercial Features or
+other paid AnchorShell functionality.
+
+You may modify the Software for permitted purposes, but no modification may be
+used to obtain functionality prohibited by Sections 5 or 6.
+
+8. Authentication, APIs, Plugins, and Integrations
+
+Nothing in this license prohibits You from creating clients, plugins,
+integrations, adapters, or other software that interoperates with the Software
+through documented interfaces, provided that such work does not copy or derive
+from the Software in a manner prohibited by this license and does not implement
+a prohibited Competing Relay Product or Reserved Commercial Feature using the
+Software.
+
+9. Trademarks
+
+This license does not grant any right to use the trademarks, service marks,
+trade names, logos, product names, or branding of AnchorShell, including
+"AnchorShell" or "AnchorShell Relay", except as reasonably necessary for
+truthful attribution or to identify the origin of unmodified Software.
+
+You may not imply sponsorship, endorsement, certification, or affiliation by
+AnchorShell without written permission.
+
+10. Patent Rights
+
+To the extent AnchorShell controls patent claims that would necessarily be
+infringed by Your permitted use of the unmodified Software, AnchorShell grants
+You a non-exclusive patent license solely to exercise the rights expressly
+granted by this license.
+
+This patent license terminates if You initiate patent litigation alleging that
+the Software infringes a patent, except for defensive counterclaims.
+
+11. Compliance With Law
+
+You are responsible for complying with all laws and regulations applicable to
+Your use of the Software.
+
+This license does not grant permission to use the Software in violation of
+third-party intellectual-property rights, privacy rights, contractual
+obligations, or applicable law.
+
+12. Termination
+
+Your rights under this license automatically terminate if You materially breach
+this license.
+
+For a first breach that was not willful, Your rights may be reinstated if You
+fully cure the breach within thirty (30) days after receiving written notice
+from AnchorShell.
+
+AnchorShell is not required to reinstate rights following a willful breach of
+Sections 5, 6, or 7.
+
+Termination does not limit any other rights or remedies available to
+AnchorShell.
+
+13. No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, SECURITY, AVAILABILITY, OR
+ACCURACY.
+
+YOU USE THE SOFTWARE AT YOUR OWN RISK.
+
+14. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, ANCHORSHELL AND ITS CONTRIBUTORS WILL
+NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY,
+OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR
+BUSINESS OPPORTUNITY, ARISING FROM OR RELATED TO THE SOFTWARE OR THIS LICENSE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, ANCHORSHELL'S TOTAL LIABILITY ARISING
+OUT OF OR RELATED TO THE SOFTWARE OR THIS LICENSE WILL NOT EXCEED THE AMOUNT
+YOU PAID ANCHORSHELL FOR THE SOFTWARE DURING THE TWELVE (12) MONTHS BEFORE THE
+EVENT GIVING RISE TO THE CLAIM, OR US$100 IF YOU PAID NOTHING.
+
+15. Severability
+
+If a provision of this license is held unenforceable, the remaining provisions
+remain in effect to the maximum extent permitted by law.
+
+16. No Waiver
+
+A failure by AnchorShell to enforce a provision of this license does not waive
+its right to enforce that provision later.
+
+17. Entire License; Future Versions
+
+This license is the complete license for the version of the Software distributed
+with it, except for a separate written commercial agreement signed by
+AnchorShell.
+
+AnchorShell may publish future versions of this license for future releases.
+A later license version does not retroactively change the license granted for a
+version of the Software already distributed under this license unless You
+expressly accept the later version.
+
+18. Separate Commercial Licenses
+
+AnchorShell may offer separate commercial licenses, paid plans, enterprise
+agreements, or other permissions on different terms.
+
+A separate written commercial agreement may grant rights that are restricted
+by this license.
+
+
+Schedule A — Reserved Commercial Features
+
+The following are Reserved Commercial Features for purposes of this license.
+The restriction applies to substantially equivalent functionality, regardless
+of its name or presentation.
+
+A. Smart Groups and Smart Routing
+   Request-characterization-, intent-, policy-, or classification-driven
+   automatic selection among models, including configurable assignments,
+   confidence-based selection, or equivalent intelligent model-selection
+   behavior beyond ordinary manually configured groups and fallback ordering.
+
+B. Multi-User Teams and Organizations
+   Multiple separately authenticated human users within a shared Relay
+   deployment, including invitations, organization membership, team membership,
+   or shared organization administration.
+
+C. Granular Permissions and Role-Based Access Control
+   User-, role-, team-, or identity-scoped permissions controlling access to
+   Relay administration, providers, routing, settings, usage, logs, queues,
+   limits, or related functionality.
+
+D. Managed API Keys
+   Multiple individually attributable, revocable, scoped, or user/workload-
+   specific Relay API keys beyond the single deployment-level credentials
+   provided by the Community Edition.
+
+E. Per-User and Per-Key Budgets or Limits
+   Request, token, spending, provider, model, or other usage limits applied to
+   individual users, managed API keys, workloads, or equivalent identities.
+
+F. User and API-Key Usage Attribution
+   Attribution, filtering, accounting, or visibility of requests, tokens,
+   costs, limits, logs, or usage by individual user, managed API key, workload,
+   or equivalent identity.
+
+G. Connected Subscription Accounts
+   Provider-account authorization flows, subscription-account connections,
+   account pairing, managed credential lifecycle, provider quota
+   synchronization, model discovery tied to subscription accounts, or access
+   grants for connected provider accounts.
+
+H. Classification Feedback and Review
+   Product functionality for reviewing, correcting, labeling, or managing
+   Relay request-classification results or feedback at an organizational or
+   multi-user level.
+
+I. Enterprise Identity Management
+   SSO, SAML, organization-wide OIDC identity integration, SCIM provisioning,
+   enterprise directory synchronization, or substantially equivalent
+   enterprise identity-management functionality.
+
+End of AnchorShell Relay Community License 1.0

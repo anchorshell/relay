@@ -1,0 +1,36 @@
+root = "."
+tmp_dir = "tmp/air"
+
+[build]
+cmd = "GOCACHE=/tmp/relay-gocache go build -o ./tmp/air/relay ./cmd/relay"
+bin = "./tmp/air/relay"
+full_bin = "./tmp/air/relay"
+include_ext = ["go", "mod", "sum"]
+exclude_dir = [
+  "tmp",
+  "bin",
+  "node_modules",
+  ".nuxt",
+  ".output",
+  "dist",
+  "frontend/node_modules",
+  "frontend/.nuxt",
+  "frontend/.output",
+  "web/node_modules",
+  "web/.nuxt",
+  "web/.output",
+  "web/.nitro",
+  "web/.cache",
+  "web/dist",
+  "internal/ui/dist"
+]
+delay = 1000
+stop_on_error = true
+send_interrupt = true
+kill_delay = "500ms"
+
+[log]
+time = true
+
+[screen]
+clear_on_rebuild = false

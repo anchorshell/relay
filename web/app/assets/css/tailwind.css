@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* Inactive legacy stylesheet. Nuxt currently loads ~/assets/css/tailwind.css. */
+@layer base {
+  :root {
+    --font-sans: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
+    --font-logo: "Source Sans 3 Variable", "Source Sans 3", "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
+    --font-editorial: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --font-accent: "Source Sans 3 Variable", "Source Sans 3", "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+    font-family: var(--font-sans);
+  }
+  * {
+    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+  }
+  ::selection {
+    background: rgba(245, 158, 11, 0.3);
+    color: white;
+  }
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.2s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
