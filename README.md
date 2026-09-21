@@ -57,9 +57,32 @@ Run it yourself with no separate database or queue to manage. Relay ships as a s
 
 ## Quick start
 
-Requires Git, Make, Go 1.26.4 or a newer Go 1.26 patch, and Node.js 22.19.0 with npm.
+### Run with npx (no Go compiler required)
+
+Requires Node.js 22+ with npm. From the directory where you want to keep your
+Relay configuration and data:
+
+```bash
+npx @anchorshell/relay@0.1.0 install
+npx @anchorshell/relay
+```
+
+The first command downloads and caches the native Relay binary without starting
+it. The second starts Relay with its built-in dashboard. You can also skip the
+install step: launching Relay downloads the binary if needed.
+
+Open **[http://localhost:11730/](http://localhost:11730/)** in your browser and sign
+in with the `RELAY_ADMIN_TOKEN` printed in your terminal. Leave the terminal
+running while you use Relay; press Ctrl+C to stop it.
+
+To install the current npm version without pinning it, use
+`npx @anchorshell/relay install`. To keep both steps on version 0.1.0, launch with
+`npx @anchorshell/relay@0.1.0`. Laya is optional and runs separately; see
+[Run Laya locally](#run-laya-locally-optional).
 
 ### Build from source
+
+Requires Git, Make, Go 1.26.4 or a newer Go 1.26 patch, and Node.js 22.19.0 with npm.
 
 <!-- LAUNCH CHECK: Confirm the configured GitHub repository is publicly accessible before announcing this quick start. -->
 
@@ -124,7 +147,7 @@ tasks locally. The built-in AnchorShell Classifier remains the default; Laya is
 an optional, separate worker.
 
 You need **Python 3.11–3.13**, **uv**, and enough disk space and memory for the
-model and its PyTorch runtime. See the [Laya setup guide](docs/LAYA.md) for
+model and its PyTorch runtime. See the [Laya setup guide](https://anchorshell.com/docs/laya) for
 platform requirements and existing Python environment options.
 
 From the repository root, run the one-time setup:
@@ -161,7 +184,7 @@ unavailable, Relay falls back to AnchorShell classification for that request
 without changing your saved selection.
 
 Keep the worker private—applications send requests to Relay, not directly to
-Laya. See the [Laya guide](docs/LAYA.md) for authentication, the fast routing
+Laya. See the [Laya guide](https://anchorshell.com/docs/laya) for authentication, the fast routing
 contract, and explicit full-characterization options.
 
 ## Features
@@ -170,7 +193,7 @@ contract, and explicit full-characterization options.
 - **One API across providers** — connect cloud providers and locally served models through OpenAI-compatible APIs.
 - **Queue-first routing** — absorb bursts, pace requests, and wait for preferred-model capacity within your wait budget.
 - **Groups and fallbacks** — put several models behind one name and control the order Relay tries them.
-- **Automatic request categorization** — inspect task intent, domain, and complexity with the built-in AnchorShell Classifier or an [optional local Laya worker](docs/LAYA.md).
+- **Automatic request categorization** — inspect task intent, domain, and complexity with the built-in AnchorShell Classifier or an [optional local Laya worker](https://anchorshell.com/docs/laya).
 - **Resource limits** — keep shared capacity and spend in check with request, token, cost, and concurrency limits.
 - **Guardrails against data leaks** — connect pre-dispatch checks to help block sensitive prompts and post-response checks to inspect output.
 - **Usage and cost tracking** — see where tokens and money go using configured model prices.
