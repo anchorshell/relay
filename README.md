@@ -1,6 +1,14 @@
 <!-- @format -->
 
 <p align="center">
+  <a href="https://www.producthunt.com/products/anchorshell-relay"><img src="https://img.shields.io/badge/Product%20Hunt-Live%20Today-DA552F?logo=producthunt&amp;logoColor=white" alt="AnchorShell Relay on Product Hunt"></a>
+</p>
+
+<p align="center">
+  <strong>We’re live on Product Hunt Today – September 22.  Check out the launch and tell us what you think.</strong>
+</p>
+
+<p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="web/public/anchorshell-logo-dark.png">
     <img src="web/public/anchorshell-logo-light-high-contrast.png" width="96" height="96" alt="AnchorShell">
