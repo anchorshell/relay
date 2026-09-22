@@ -1,11 +1,12 @@
 <!-- @format -->
 
 <p align="center">
-  <a href="https://www.producthunt.com/products/anchorshell-relay"><img src="https://img.shields.io/badge/Product%20Hunt-Live%20Today-DA552F?logo=producthunt&amp;logoColor=white" alt="AnchorShell Relay on Product Hunt"></a>
+  <a href="https://www.producthunt.com/products/anchorshell-relay"><img src="https://img.shields.io/badge/Product%20Hunt-Live%20Today-DA552F?style=for-the-badge&amp;logo=producthunt&amp;logoColor=white" width="320" alt="AnchorShell Relay on Product Hunt"></a>
 </p>
 
 <p align="center">
-  <strong>We’re live on Product Hunt Today – September 22.  Check out the launch and tell us what you think.</strong>
+  <strong>We’re live on Product Hunt Today – September 22.</strong><br>
+  <strong>Check out the launch and tell us what you think.</strong>
 </p>
 
 <p align="center">
